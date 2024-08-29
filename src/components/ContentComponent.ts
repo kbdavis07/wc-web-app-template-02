@@ -28,8 +28,8 @@ export class ContentComponent extends HTMLElement {
 
     const routes = this.siteData.pages.map(page => ({
       name: page.name,
-      path: page.name === 'home' ? '/' : `/${page.name}`,
-      component: `${page.name}-component`,
+      path: page.name.toLowerCase() === 'home' ? '/' : `/${page.name.toLowerCase()}`,
+      component: `${page.name.toLowerCase()}-component`,
       import: () => Promise.resolve({ default: this.createComponent(page) }),
     }));
 

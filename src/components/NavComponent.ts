@@ -21,7 +21,7 @@ export class NavComponent extends HTMLElement {
     if (!this.siteData) return;
 
     const links = this.siteData.pages.map(page => {
-      const path = page.name === 'home' ? '/' : `/${page.name}`;
+      const path = page.name.toLowerCase() === 'home' ? '/' : `/${page.name.toLowerCase()}`;
       return `<a href="${path}">${page.name}</a>`;
     }).join('');
 

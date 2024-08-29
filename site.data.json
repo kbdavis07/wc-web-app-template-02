@@ -1,15 +1,15 @@
 {
     "pages": [
       {
-        "name": "home",
+        "name": "Home",
         "content": "<h1>Welcome to the Home Page</h1><p>This is the main content of the home page.</p>"
       },
       {
-        "name": "about",
+        "name": "About",
         "content": "<h1>About Us</h1><p>This is the about page content.</p>"
       },
       {
-        "name": "resume",
+        "name": "Resume",
         "content": "<h1>Resume</h1><p>This is where you can find my resume.</p>"
       }
     ]
