@@ -1,8 +1,8 @@
-import { SimplrRouter, SimplrRouterOptions } from "@simplr-wc/router";
+import SiteDataService from '../services/SiteDataService.js';
 import { SiteData, PageData } from '../types.js';
 
 export class ContentComponent extends HTMLElement {
-  private router!: SimplrRouter;
+  private siteDataService = SiteDataService.getInstance();
   private siteData: SiteData | null = null;
 
   constructor() {
@@ -11,43 +11,45 @@ export class ContentComponent extends HTMLElement {
 
   async connectedCallback() {
     await this.loadSiteData();
+    this.renderContent();
     this.setupRouter();
   }
 
   private async loadSiteData() {
     try {
-      const response = await fetch('/site.data.json');
-      this.siteData = await response.json() as SiteData;
+      this.siteData = await this.siteDataService.getSiteData();
     } catch (error) {
       console.error('Failed to load site data:', error);
     }
   }
 
-  private setupRouter() {
+  private renderContent() {
     if (!this.siteData) return;
 
-    const routes = this.siteData.pages.map(page => ({
-      name: page.name,
-      path: page.name.toLowerCase() === 'home' ? '/' : `/${page.name.toLowerCase()}`,
-      component: `${page.name.toLowerCase()}-component`,
-      import: () => Promise.resolve({ default: this.createComponent(page) }),
-    }));
-
-    const routerOptions: SimplrRouterOptions = {
-      routes,
-      transitionSpeed: 50,
-    };
-
-    this.router = new SimplrRouter(routerOptions);
-    this.router.init();
+    this.siteData.pages.forEach(page => {
+      const section = document.createElement('section');
+      section.id = page.name.toLowerCase();
+      section.innerHTML = page.content;
+      section.style.display = 'none';
+      this.appendChild(section);
+    });
   }
 
-  private createComponent(page: PageData) {
-    return class extends HTMLElement {
-      connectedCallback() {
-        this.innerHTML = page.content;
+  private setupRouter() {
+    window.addEventListener('popstate', () => this.updateContentVisibility());
+    this.updateContentVisibility();
+  }
+
+  private updateContentVisibility() {
+    if (!this.siteData) return;
+
+    const path = window.location.pathname.slice(1) || 'home';
+    this.siteData.pages.forEach(page => {
+      const section = this.querySelector(`#${page.name.toLowerCase()}`) as HTMLElement;
+      if (section) {
+        section.style.display = page.name.toLowerCase() === path ? 'block' : 'none';
       }
-    };
+    });
   }
 }
 
