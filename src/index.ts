@@ -1,4 +1,3 @@
-import './index.js';
-import './router.ts';
-import './components/TopNavComponent.js';
+import './components/ContentComponent.js';
+import './components/NavComponent.js';
 
