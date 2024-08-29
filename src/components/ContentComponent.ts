@@ -13,6 +13,7 @@ export class ContentComponent extends HTMLElement {
     await this.loadSiteData();
     this.renderContent();
     this.setupRouter();
+    this.setupLinkInterception();
   }
 
   private async loadSiteData() {
@@ -38,6 +39,17 @@ export class ContentComponent extends HTMLElement {
   private setupRouter() {
     window.addEventListener('popstate', () => this.updateContentVisibility());
     this.updateContentVisibility();
+  }
+
+  private setupLinkInterception() {
+    $(document).on('click', 'a', (event) => {
+      const href = $(event.currentTarget).attr('href');
+      if (href && href.startsWith('/')) {
+        event.preventDefault();
+        history.pushState(null, '', href);
+        this.updateContentVisibility();
+      }
+    });
   }
 
   private updateContentVisibility() {
