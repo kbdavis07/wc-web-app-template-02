@@ -1,14 +1,12 @@
-// import { Router } from '@simplr-wc/router';
 import { SimplrRouter, SimplrRouterOptions } from "@simplr-wc/router";
 import { SiteData, PageData } from '../types.js';
 
 export class ContentComponent extends HTMLElement {
-  private router: SimplrRouter;
+  private router!: SimplrRouter;
   private siteData: SiteData | null = null;
 
   constructor() {
     super();
-    this.router = new SimplrRouter(this);
   }
 
   async connectedCallback() {
@@ -29,15 +27,27 @@ export class ContentComponent extends HTMLElement {
     if (!this.siteData) return;
 
     const routes = this.siteData.pages.map(page => ({
+      name: page.name,
       path: page.name === 'home' ? '/' : `/${page.name}`,
-      callback: () => this.renderContent(page)
+      component: `${page.name}-component`,
+      import: () => Promise.resolve({ default: this.createComponent(page) }),
     }));
 
-    this.router.setRoutes(routes);
+    const routerOptions: SimplrRouterOptions = {
+      routes,
+      transitionSpeed: 50,
+    };
+
+    this.router = new SimplrRouter(routerOptions);
+    this.router.init();
   }
 
-  private renderContent(page: PageData) {
-    this.innerHTML = page.content;
+  private createComponent(page: PageData) {
+    return class extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = page.content;
+      }
+    };
   }
 }
 
