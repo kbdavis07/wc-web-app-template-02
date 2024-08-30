@@ -27,18 +27,24 @@ function buildProject() {
 
     const combinedCss = cssFiles.map(file => fs.readFileSync(path.join(cssDir, file), 'utf8')).join('\n');
         
-    console.log("combinedCss:", combinedCss);
+    fs.writeFileSync(path.join(__dirname, '..', 'bundled.css'), combinedCss);
 
-    fs.writeFileSync(path.join(__dirname, '..', 'dist', 'bundled.css'), combinedCss);
+    // Define paths
+    const srcIndexPath = path.join(__dirname, '..', 'index.html');
+    const distIndexPath = path.join(__dirname, '..', 'dist', 'index.html');
 
-    // Copy HTML and other necessary files
-    const indexPath = path.join(__dirname, '..', 'public', 'index.html');
-    let indexHtml = fs.readFileSync(indexPath, 'utf8');
-        
+    // Move index.html to /dist folder
+    fs.copyFileSync(srcIndexPath, distIndexPath);
+    
+    // Read index.html from /dist folder
+    let indexHtml = fs.readFileSync(distIndexPath, 'utf8');
+
     // Replace the script tag
-    indexHtml = indexHtml.replace('<script type="module" src="/src/index.ts"></script>','<script type="module" src="/dist/index.js"></script>');
+    indexHtml = indexHtml.replace('<script type="module" src="/src/index.ts"></script>', '<script type="module" src="index.js"></script>');
 
-    fs.writeFileSync(path.join(__dirname, '..', 'dist', 'index.html'), indexHtml);
+    // Save the modified index.html back to /dist folder
+    fs.writeFileSync(distIndexPath, indexHtml);
+
     fs.copyFileSync(path.join(__dirname, '..', 'public', 'pages.json'),path.join(__dirname, '..', 'dist', 'pages.json'));
     fs.copyFileSync(path.join(__dirname, '..', 'public', 'manifest.json'),path.join(__dirname, '..', 'dist', 'manifest.json'));
 
