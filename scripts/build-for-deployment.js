@@ -45,8 +45,8 @@ function buildProject() {
     // Save the modified index.html back to /dist folder
     fs.writeFileSync(distIndexPath, indexHtml);
 
-    fs.copyFileSync(path.join(__dirname, '..', 'public', 'pages.json'),path.join(__dirname, '..', 'dist', 'pages.json'));
-    fs.copyFileSync(path.join(__dirname, '..', 'public', 'manifest.json'),path.join(__dirname, '..', 'dist', 'manifest.json'));
+    fs.copyFileSync(path.join(__dirname, '..', 'pages.json'),path.join(__dirname, '..', 'dist', 'pages.json'));
+    fs.copyFileSync(path.join(__dirname, '..', 'manifest.json'),path.join(__dirname, '..', 'dist', 'manifest.json'));
 
     console.log('Build has completed successfully and now ready to deploy the dist folder! 🚀 😊');
 

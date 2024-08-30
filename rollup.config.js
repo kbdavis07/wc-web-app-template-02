@@ -4,7 +4,7 @@ import { terser } from 'rollup-plugin-terser';
 import fs from 'fs';
 
 // Read site data
-const siteData = JSON.parse(fs.readFileSync('site.data.json', 'utf-8'));
+const siteData = JSON.parse(fs.readFileSync('pages.json', 'utf-8'));
 
 // Generate HTML files for each page
 const htmlPlugins = siteData.pages.map(page => {

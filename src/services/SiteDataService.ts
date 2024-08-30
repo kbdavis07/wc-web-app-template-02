@@ -20,7 +20,7 @@ class SiteDataService {
     }
 
     try {
-      const response = await fetch('/site.data.json');
+      const response = await fetch('/pages.json');
       this.siteData = await response.json() as SiteData;
       return this.siteData;
     } catch (error) {
