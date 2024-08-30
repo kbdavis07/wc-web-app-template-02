@@ -1,16 +1,25 @@
 {
-    "pages": [
-      {
-        "name": "Home",
-        "content": "<h1>Welcome to the Home Page</h1><p>This is the main content of the home page.</p>"
-      },
-      {
-        "name": "About",
-        "content": "<h1>About Us</h1><p>This is the about page content.</p>"
-      },
-      {
-        "name": "Resume",
-        "content": "<h1>Resume</h1><p>This is where you can find my resume.</p>"
-      }
-    ]
-  }
+  "pages": [
+    {
+      "name": "Home",
+      "content": "<h1>Welcome to the Home Page</h1><p>This is the main content of the home page.</p>",
+      "title": "Home - My Website",
+      "description": "Welcome to the home page of my website. Here you can find the main content.",
+      "keywords": "home, main, content"
+    },
+    {
+      "name": "About",
+      "content": "<h1>About Us</h1><p>This is the about page content.</p>",
+      "title": "About Us",
+      "description": "Learn more about us on this page.",
+      "keywords": "about, us, information"
+    },
+    {
+      "name": "Resume",
+      "content": "<h1>Resume</h1><p>This is where you can find my resume.</p>",
+      "title": "Resume",
+      "description": "Find my resume on this page.",
+      "keywords": "resume, CV, professional"
+    }
+  ]
+}
