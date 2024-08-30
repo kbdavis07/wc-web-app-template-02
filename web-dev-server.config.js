@@ -8,7 +8,7 @@ export default {
   plugins: [
     esbuildPlugin({ ts: true, target: 'auto' })
   ],
-  appIndex: 'index.html',
+  appIndex: '/public/index.html',
   mimeTypes: {
     '**/*.ts': 'js'
   }
