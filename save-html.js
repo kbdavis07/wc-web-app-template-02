@@ -20,10 +20,9 @@ const __dirname = dirname(__filename);
   // List of pages to save
   const pages = ['/', '/about', '/contact']; // Add your page routes here
 
-  // Launch Puppeteer with the bundled Chromium and --no-sandbox flag
+  // Launch Puppeteer with the bundled Chromium
   const browser = await puppeteer.launch({
     executablePath: puppeteer.executablePath(), // Use Puppeteer's bundled Chromium
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
   const page = await browser.newPage();
 
@@ -39,5 +38,3 @@ const __dirname = dirname(__filename);
   await browser.close();
   server.stop();
 })();
-
-
